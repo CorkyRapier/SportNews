@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{ one_news.title }} : {{ block.super }}
+{% endblock %}
+
+{% block content %}
+  <div class="card mb-3">
+    <div class="card-header">
+      Категория: <a href="{{ one_news.genre.get_absolute_url }}">{{ one_news.genre.name }}</a>
+    </div>
+    <div class="card-body">
+        {% if one_news.img %}
+        <img src="{{ one_news.img.url }}" alt="" class="card-img-top">
+        {% else %}
+        <p class="float-left">Фото нет</p>
+        {% endif %}
+        <div class="container">
+          <h5 class="card-title" style="margin-top: 10px;">{{ one_news.title }}</h5>
+          <p class="card-text">{{ one_news.news_text|linebreaks }}</p>
+        </div>
+    </div>
+    <div class="card-footer text-muted">
+      {{ one_news.date_create|date:"d.m.Y H:i:s" }}
+    </div>
+  </div>
+<div>
+    <div><h5>Комментарии:</h5>
+    {% with comments.count as total_comments %}
+        <h6>Кол-во: {{ total_comments }}</h6>
+    {% endwith %}
+    </div>
+    {% for comment in comments %}
+    <div class="comment" style="margin-top: 5px;">
+        {% comment %}
+        <p class="info">
+            Comment {{ forloop.counter }} by {{ comment.name }}
+            {{ comment.created }}
+        </p>
+        {% endcomment %}
+        <div class="card" style="width: 60rem;">
+            <div class="card-body">
+                <h5 class="card-title">{{ comment.name }}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">{{ comment.created|date:"d.m.Y H:i" }}</h6>
+                <p class="card-text">{{ comment.comment_text|linebreaks }}</p>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+        <p>Ещё никто не оставил комментарий. Будь первым!</p>
+    {% endfor %}
+</div>
+<hr>
+<div style="margin-top: 20px;">
+    {% if new_comment %}
+        <h5>Ваш комментарий добавлен</h5>
+    {% else %}
+        <h5>Добавить комментарий:</h5>
+        <form action="." method="post">
+        {% csrf_token %}
+        {% if user.is_authenticated %}
+            <div class="form-group">
+                {{ comment_form.comment_text }}
+                <div class='invalid-feedback'>
+                    {{ comment_form.comment_text.errors }}
+                </div>
+            </div>
+        <button type="submit" class="btn btn-primary btn-block" style="margin-top: 10px;">Добавить комментарий</button>
+        </form>
+        {% else %}
+            <p>Комментирование доступно только зарегистрированным пользователям</p>
+        {% endif %}
+    {% endif %}
+</div>
+
+
+{% endblock %}

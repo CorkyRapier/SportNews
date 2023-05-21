@@ -1,0 +1,11 @@
+{% load news_tags %}
+<div class="list-group list-group-flush">
+        <h6 style="margin-bottom: 5px; padding-top: 5px;">&#128293;Горячие новости:</h6>
+        {% get_news as news %}
+        {% for item in news %}
+                <a href="{{ item.get_absolute_url }}" class="list-group-item list-group-item-action">
+                    <span style="font-size: 13px;">{{ item.title }}</span><br>
+                    <span style="font-size: 12px;">&#128065; {{ item.views }}</span>
+                </a>
+    {% endfor %}
+</div>

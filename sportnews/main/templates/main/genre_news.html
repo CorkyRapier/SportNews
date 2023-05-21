@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  Новости сегодня : {{ block.super }}
+{% endblock %}
+
+{% block content %}
+    <div class="row justify-content-center" style="padding-bottom: 10px;">
+        <div class="col" style="text-align: center;">
+            <a href="{{ one_main_news.get_absolute_url }}" style="text-decoration: none; color: black;">
+              {% if one_main_news.img %}
+              <img src="{{ one_main_news.img.url }}" alt="" class="img-thumbnail">
+              {% else %}
+              <p>Фото нет</p>
+              {% endif %}
+              <h5> {{ one_main_news.title }} </h5>
+            </a>
+        </div>
+    </div>
+{% for item in other_news %}
+    <div class="row border-bottom border-end" style="margin-top: 10px;">
+        <div class="col">
+          <a href="{{ item.get_absolute_url }}" style="text-decoration: none; color: black;">
+            <p> {{ item.title }} </p>
+          </a>
+        </div>
+        <div class="col float-right">
+          <a href="{{ item.get_absolute_url }}" style="text-decoration: none; color: black;">
+            <p class="text-end text-muted"> {{ item.date_create|date:"d.m.Y H:i" }} </p>
+          </a>
+        </div>
+    </div>
+{% endfor %}
+
+{% endblock %}

@@ -1,0 +1,30 @@
+{% load news_tags %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-xxl">
+      <a class="navbar-brand" href="{% url 'main:all_news' %}">SportNews</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          {% get_genre as genre %}
+          <li class="nav-item"><a class="nav-link" href="{% url 'main:all_news' %}">Главная</a></li>
+          {% for item in genre %}
+          <li class="nav-item"><a class="nav-link" href="{{ item.get_absolute_url }}">{{ item.name }}</a></li>
+          {% endfor %}
+          <li class="nav-item"><a class="nav-link" href="{% url 'forum:all_treads' %}">Форум</a></li>
+        </ul>
+        {% if perms.news.add_news %}
+          <p class="navbar-text" style="margin-right: 10px;"><a href="{% url 'main:add_news' %}">Добавить новость</a></p>
+        {% endif %}
+        <span class="navbar-text">
+          {% if request.user.is_authenticated %}
+          <p>Привет, {{ user.username }}!!! | <a href="{% url 'main:logout' %}">Выход</a></p>
+          {% else %}
+          <a href="{% url 'main:register' %}">Регистрация</a> | <a href="{% url 'main:login' %}">Войти</a>
+          {% endif %}
+        </span>
+      </div>
+    </div>
+  </nav>

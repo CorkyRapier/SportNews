@@ -1,0 +1,66 @@
+{% extends 'forum_base.html' %}
+{% block forum %}
+    <div class="container" style="margin-top: 10px;">
+        <div class="row justify-content-center">
+            <div class="col-10">
+                <h5 class="card-title">{{ tread.title }}</h5>
+                <div class="card" style="width: 60rem;">
+                    <div class="card-body">
+                        <div class="row justify-content-between">
+                            <div class="col-8">
+                                <h5 class="card-title">{{ tread.user_id.username }}</h5>
+                            </div>
+                            <div class="col-2">
+                                <h6 class="card-subtitle mb-2 text-muted">{{ tread.date_create|date:"d.m.Y H:i" }}</h6>
+                            </div>
+                        </div>
+                        <p class="card-text">{{ tread.discription|linebreaks }}</p>
+                    </div>
+                </div>
+                <hr style="width: 60rem;">
+                <div style="margin-top: 15px;">
+                    {% for comment in tread.comments_treads.all %}
+                        <div class="comment" style="margin-top: 5px;">
+                            <div class="card" style="width: 60rem;">
+                                <div class="card-body">
+                                    <div class="row justify-content-between">
+                                        <div class="col-8">
+                                            <h5 class="card-title">{{ comment.user_id.username }}</h5>
+                                        </div>
+                                        <div class="col-2">
+                                            <h6 class="card-subtitle mb-2 text-muted">{{ comment.date_create|date:"d.m.Y H:i" }}</h6>
+                                        </div>
+                                    </div>
+                                            <p class="card-text">{{ comment.comment_text|linebreaks }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    {% empty %}
+                        <p>Ещё никто не оставил комментарий. Будь первым!</p>
+                    {% endfor %}
+                </div>
+                <div style="margin-top: 20px;">
+                    {% if new_comment %}
+                        <h5>Ваш комментарий добавлен</h5>
+                    {% else %}
+                        <h5>Добавить комментарий:</h5>
+                        <form action="{{ tread.tread_id }}" method="post">
+                        {% csrf_token %}
+                        {% if user.is_authenticated %}
+                            <div class="form-group">
+                                {{ comment_form.comment_text }}
+                                <div class='invalid-feedback'>
+                                    {{ comment_form.comment_text.errors }}
+                                </div>
+                            </div>
+                        <button type="submit" class="btn btn-primary btn-block" style="margin-top: 10px;">Добавить комментарий</button>
+                        </form>
+                        {% else %}
+                            <p>Комментирование доступно только зарегистрированным пользователям</p>
+                        {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  Новости сегодня : {{ block.super }}
+{% endblock %}
+
+{% block content %}
+    <div class="row" style="font-family: 'Playfair Display'; font-weight: 500;">
+        <div class="col">
+            <a href="{{ main_news.0.get_absolute_url }}" style="text-decoration: none; color: black;">
+              {% if main_news.0.img %}
+              <img src="{{ main_news.0.img.url }}" alt="" width="700" class="img-thumbnail">
+              {% else %}
+              <p>Фото нет</p>
+              {% endif %}
+              <h5> {{ main_news.0.title }} </h5>
+            </a>
+        </div>
+        <div class="col">
+          <a href="{{ main_news.1.get_absolute_url }}" style="text-decoration: none; color: black;">
+            {% if main_news.1.img %}
+            <img src="{{ main_news.1.img.url }}" alt="" width="600" class="img-thumbnail">
+            {% else %}
+            <p>Фото нет</p>
+            {% endif %}
+            <h5> {{ main_news.1.title }} </h5>
+          </a>
+      </div>
+    </div>
+    <div class="row" style="margin-top: 10px; font-family: 'Playfair Display'; font-weight: 400;">
+      {% for item in sub_news %}
+        <div class="col">
+          <a href="{{ item.get_absolute_url }}" style="text-decoration: none; color: black;">
+            {% if item.img %}
+            <img src="{{ item.img.url }}" alt="" width="400" class="img-thumbnail">
+            {% else %}
+            <p>Фото нет</p>
+            {% endif %}
+            <h6> {{ item.title }} </h6>
+          </a>
+        </div>
+      {% endfor %}
+    </div>
+  
+{% endblock %}

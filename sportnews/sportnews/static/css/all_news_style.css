@@ -1,0 +1,62 @@
+.container-img-main-news {
+    position: relative;
+    text-align: center;
+    color: white;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+}
+
+/* Bottom left text */
+.bottom-left {
+    position: absolute;
+    bottom: 8px;
+    left: 16px;
+}
+
+/* Top left text */
+.top-left {
+    position: absolute;
+    top: 8px;
+    left: 16px;
+}
+
+/* Top right text */
+.top-right {
+    position: absolute;
+    top: 8px;
+    right: 16px;
+}
+
+/* Bottom right text */
+.bottom-right {
+    position: absolute;
+    bottom: 8px;
+    right: 16px;
+}
+
+/* Centered text */
+.centered {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+@font-face {
+    font-weight: 500;
+    font-family: "Playfair Display";
+    src: url("../fonts/pdm.ttf");
+}
+
+@font-face { 
+    font-weight: 400 ;/* Соответствует значению normal */
+    font-family: "Playfair Display";
+    src: url("../fonts/pdregular.ttf");
+}
+
+.fixed-footer-on-bottom{
+    position: fixed;
+    left: 0px;
+    bottom: 0px;
+    height: 30px;
+    width: 100%;
+}
